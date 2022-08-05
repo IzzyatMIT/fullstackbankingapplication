@@ -5,7 +5,7 @@
   "main": "/public/index.html",
   "proxy": "http://localhost:5000",
   "scripts": {
-        "start": "node index.js"
+        "start": "node index.js",
     "heroku-postbuild": "npm install"
   },
   "author": "IzzyatMIT",
