@@ -5,20 +5,18 @@ const cors = require('cors');
 const url = process.env.ATLAS_URI;
 const bodyParser = require('body-parser');
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80;
 
 const { default: mongoose } = require('mongoose');
 
-
-
-
-
 //db
-mongoose.connect( url, {
-  useNewUrlParser: true,
-  //   useCreateIndex: true,
-  useUnifiedTopology: true,
-}).then(() => console.log('DB Connected'));;
+mongoose
+  .connect(url, {
+    useNewUrlParser: true,
+    //   useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log('DB Connected'));
 
 //import secure routes
 const authRoutes = require('./routes/auth');
