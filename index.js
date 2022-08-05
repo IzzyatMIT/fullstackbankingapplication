@@ -20,7 +20,7 @@ mongoose
 
 //import secure routes
 const authRoutes = require('./routes/auth');
-// const { db } = require('./models/User');
+const { db } = require('./models/user');
 
 // used to serve static files from public directory
 app.use(express.static('public'));

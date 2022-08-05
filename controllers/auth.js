@@ -1,34 +1,34 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const { createJWT } = require("../utils/auth");
+const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const { createJWT } = require('../utils/auth');
 
 const emailRegexp =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 exports.signup = (req, res, next) => {
-  console.log("hey, im here");
+  console.log('hey, im here');
   let { name, email, password, password_confirmation } = req.body;
   let errors = [];
   if (!name) {
-    errors.push({ name: "required" });
+    errors.push({ name: 'required' });
   }
   if (!email) {
-    errors.push({ email: "required" });
+    errors.push({ email: 'required' });
   }
   if (!emailRegexp.test(email)) {
-    errors.push({ email: "invalid" });
+    errors.push({ email: 'invalid' });
   }
   if (!password) {
-    errors.push({ password: "required" });
+    errors.push({ password: 'required' });
   }
   if (!password_confirmation) {
     errors.push({
-      password_confirmation: "required",
+      password_confirmation: 'required',
     });
   }
   if (password != password_confirmation) {
-    errors.push({ password: "mismatch" });
+    errors.push({ password: 'mismatch' });
   }
   if (errors.length > 0) {
     return res.status(422).json({ errors: errors });
@@ -39,7 +39,7 @@ exports.signup = (req, res, next) => {
       if (user) {
         return res
           .status(422)
-          .json({ errors: [{ user: "email already exists" }] });
+          .json({ errors: [{ user: 'email already exists' }] });
       } else {
         const user = new User({
           name: name,
@@ -70,7 +70,7 @@ exports.signup = (req, res, next) => {
     })
     .catch((err) => {
       res.status(500).json({
-        errors: [{ error: "Something went wrong" }],
+        errors: [{ error: 'Something went wrong' }],
       });
     });
 };
@@ -79,24 +79,24 @@ exports.signin = (req, res) => {
   let { email, password } = req.body;
   let errors = [];
   if (!email) {
-    errors.push({ email: "required" });
+    errors.push({ email: 'required' });
   }
   if (!emailRegexp.test(email)) {
-    errors.push({ email: "invalid email" });
+    errors.push({ email: 'invalid email' });
   }
   if (!password) {
-    errors.push({ password: "required" });
+    errors.push({ password: 'required' });
   }
   if (errors.length > 0) {
     return res.status(422).json({ errors: errors });
   }
 
-  User.findOne({ email: email }, console.log("in find one"))
+  User.findOne({ email: email }, console.log('in find one'))
 
     .then((user) => {
       if (!user) {
         return res.status(404).json({
-          errors: [{ user: "not found" }],
+          errors: [{ user: 'not found' }],
         });
       } else {
         bcrypt
@@ -105,13 +105,13 @@ exports.signin = (req, res) => {
             if (!isMatch) {
               return res
                 .status(400)
-                .json({ errors: [{ password: "incorrect" }] });
+                .json({ errors: [{ password: 'incorrect' }] });
             }
             let access_token = createJWT(
               user.email,
               user._id,
               3600,
-              console.log("in create JWT")
+              console.log('in create JWT')
             );
             jwt.verify(
               access_token,
@@ -183,8 +183,8 @@ exports.withdrawls = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie("jwt");
-  res.redirect("/");
+  res.clearCookie('jwt');
+  res.redirect('/');
 };
 
 // // All users
