@@ -2,11 +2,11 @@
   "name": "badbankfinal",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "/public/index.html",
   "proxy": "http://localhost:5000",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+        "start": "node index.js"
+    "heroku-postbuild": "npm install"
   },
   "author": "IzzyatMIT",
   "license": "MIT",
